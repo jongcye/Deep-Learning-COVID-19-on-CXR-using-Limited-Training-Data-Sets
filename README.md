@@ -24,7 +24,7 @@ Download JSRT/SCR training dataset in "data" folder with corresponding repositor
 
 For training, just run "segmentation/train.py".
 
-Download inference datasets in "data" folder and rename each dataset folder as its corresponding class name. Modify "folder_list" in "segmentation/inference.py" with each class name. For further information of inference dataset, please refer Table 2 in the manuscript/cite{9090149} and "segmentation/metadata.xls".
+Download inference datasets in "data" folder and rename each dataset folder as its corresponding class name. Modify "folder_list" in "segmentation/inference.py" with each class name. For further information of inference dataset, please refer Table 2 in the manuscript and "segmentation/metadata.xls".
 
 For inference, just run "segmentation/inference.py".
 
