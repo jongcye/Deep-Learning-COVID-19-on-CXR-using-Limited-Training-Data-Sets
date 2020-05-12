@@ -1,6 +1,4 @@
 # Deep-Learning-COVID-19-on-CXR-using-Limited-Training-Data-Sets
-Github repository for Deep Learning COVID-19 on CXR using Limited Training Data Sets
-
 This is the Github repository for "Deep Learning COVID-19 on CXR using Limited Training Data Sets".
 
 The proposed method consists of two-step approaches, namely "making segmentation mask" and "classification".
