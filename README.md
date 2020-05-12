@@ -16,26 +16,39 @@ The detailed instruction is provided below.
 
 # Segmentation
 ------
-Instructions for segmentation.
+This is detailed instructions for the first step, segmentation.
+
+You can access requried codes in "segmentation" folder.
+
+Download JSRT/SCR training dataset in "data" folder with corresponding repository name as described in "segmentation/header.py".
+
+For training, just run "segmentation/train.py".
+
+Download inference datasets in "data" folder and rename each dataset folder as its corresponding class name. Modify "folder_list" in "segmentation/inference.py" with each class name. For further information of inference dataset, please refer Table 2 in the manuscript/cite{9090149} and "segmentation/metadata.xls".
+
+For inference, just run "segmentation/inference.py".
+
+The segmented mask (.mask.npy) and corresponding image (.image.npy) will be saved in "output" folder.
+
 
 # Classification
 ------
-This is detailed instructions for the second step, segmentation.
+This is detailed instructions for the second step, classification.
 
-After creating preprocessed image file (.image.npy) and mask (.mask.npy), seperate and divide these into train, val, and test folders.The name of preprocess image file and mask should be the same, except for the file format.
+After creating preprocessed image file (.image.npy) and mask (.mask.npy), seperate and divide these into train, val, and test folders. The name of preprocessed image file and mask should be the same, except for the file format.
 
 In our experiments, we randomly divided dataset into 0.7, 0.1, and 0.2 ratio.
 Each folder (train, val, test) should contain daughter folders for labels (normal, bacteria, TB, COVID, virus) for dataloader get labels from image folder.
 
 You can access requried codes in "classification" folder.
 
-Before the training, you should specify test name and training options in "header.py".
+Before the training, you should specify test name and training options in "classification/header.py".
 
-For training, just run "train.py".
+For training, just run "classification/train.py".
 
-For inference, just run "inference.py".
+For inference, just run "classification/inference.py".
 
-Finally, to get probabilistic Grad-CAM based saliency map, run "visualize_cnn.py".
+Finally, to get probabilistic Grad-CAM based saliency map, run "classification/visualize_cnn.py".
 
 # Publication
 -------
