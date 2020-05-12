@@ -25,7 +25,7 @@ This is detailed instructions for the second step, segmentation.
 After creating preprocessed image file (.image.npy) and mask (.mask.npy), seperate and divide these into train, val, and test folders.The name of preprocess image file and mask should be the same, except for the file format.
 
 In our experiments, we randomly divided dataset into 0.7, 0.1, and 0.2 ratio.
-Each folder (train, val, test) should contain daughter folder for labels (normal, bacteria, TB, COVID, virus) for dataloader get labels from image folder.
+Each folder (train, val, test) should contain daughter folders for labels (normal, bacteria, TB, COVID, virus) for dataloader get labels from image folder.
 
 You can access requried codes in "classification" folder.
 
