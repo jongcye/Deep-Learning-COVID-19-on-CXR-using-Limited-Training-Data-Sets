@@ -17,6 +17,7 @@ The detailed instruction is provided in each directories.
 # Publication
 -------
 To cite this, 
+
 @ARTICLE{9090149,
   author={Y. {Oh} and S. {Park} and J. C. {Ye}},
   journal={IEEE Transactions on Medical Imaging}, 
