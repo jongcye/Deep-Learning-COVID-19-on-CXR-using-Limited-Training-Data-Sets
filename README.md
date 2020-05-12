@@ -1,5 +1,4 @@
-# Deep-Learning-COVID-19-on-CXR-using-Limited-Training-Data-Sets
-# Method summary
+# Summary
 -----------------------------------
 ![methods](https://user-images.githubusercontent.com/39784965/81655488-3d5de380-9471-11ea-8f4b-b18e5fda7d08.png)
 
