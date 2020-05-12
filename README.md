@@ -12,7 +12,15 @@ Each tasks are uploaded in seperated folders.
 To make segmentation masks, you can use codes included in "segmentation folder".
 After making segmentation masks, generated masks as well as preprocessed x-ray images should be moved to "classification folder".
 
-The detailed instruction is provided in each directories.
+The detailed instruction is provided below.
+
+# Segmentation
+------
+Instructions for segmentation.
+
+# Classification
+------
+Instructions for classification.
 
 # Publication
 -------
