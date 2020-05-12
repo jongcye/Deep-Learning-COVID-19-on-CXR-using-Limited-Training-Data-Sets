@@ -16,4 +16,14 @@ The detailed instruction is provided in each directories.
 
 # Publication
 -------
+To cite this, 
+@ARTICLE{9090149,
+  author={Y. {Oh} and S. {Park} and J. C. {Ye}},
+  journal={IEEE Transactions on Medical Imaging}, 
+  title={Deep Learning COVID-19 Features on CXR using Limited Training Data Sets}, 
+  year={2020},
+  volume={},
+  number={},
+  pages={1-1},}
+  
 https://ieeexplore.ieee.org/document/9090149
