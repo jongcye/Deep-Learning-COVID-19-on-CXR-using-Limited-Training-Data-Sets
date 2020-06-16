@@ -14,6 +14,40 @@ After making segmentation masks, generated masks as well as preprocessed x-ray i
 
 The detailed instruction is provided below.
 
+
+
+# Dataset
+------
+We provide the links for COVID-19 public datasets, which are used in our recent publication, "Deep Learning COVID-19 on CXR using Limited Training Data Sets".
+
+https://ieeexplore.ieee.org/document/9090149
+
+
+These public CXR datasets are available without any restrction by downloading in below links.​
+
+[19] JSRT                http://db.jsrt.or.jp/eng.php
+
+[20] SCR                 https://www.isi.uu.nl/Research/Databases/SCR/download.php
+
+[21] NLM(MC)            http://academictorrents.com/details/ac786f74878a5775c81d490b23842fd4736bfe33
+
+[22] Pneumonia          https://www.kaggle.com/praveengovi/coronahack-chest-xraydataset
+
+[23] COVID-19           https://github.com/ieee8023/covid-chestxray-dataset
+
+
+
+Please reference the metadata for your information.
+
+https://github.com/jongcye/Deep-Learning-COVID-19-on-CXR-using-Limited-Training-Data-Sets/blob/master/metadata.xls
+
+
+You can also find corresponding links of each dataset in the page as below.
+
+https://bispl.weebly.com/covid-19-data-link.html
+
+
+
 # Segmentation
 ------
 This is detailed instructions for the first step, segmentation.
@@ -49,6 +83,7 @@ For training, just run "classification/train.py".
 For inference, just run "classification/inference.py".
 
 Finally, to get probabilistic Grad-CAM based saliency map, run "classification/visualize_cnn.py".
+
 
 # Publication
 -------
