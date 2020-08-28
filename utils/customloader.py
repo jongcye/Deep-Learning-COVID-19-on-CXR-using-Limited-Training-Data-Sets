@@ -23,7 +23,7 @@ class COVID_Dataset(data.Dataset):
         if self.mode == 'train' or self.mode == 'val':
             self.data_dir = header.data_dir + self.mode + '/'
         elif self.mode == 'test':
-            self.data_dir = '.' + header.data_dir + self.mode + '/'
+            self.data_dir = header.data_dir + self.mode + '/'
 
         self.labels = os.listdir(self.data_dir) # COVID, Bacteria, Virus, TB, Normal
 
@@ -34,15 +34,15 @@ class COVID_Dataset(data.Dataset):
 
             npy_dir = self.data_dir + label
 
-            if label == 'normal':
+            if label == 'Normal':
                 y_label = 0
             elif label == 'bacteria':
                 y_label = 1
             elif label == 'TB':
                 y_label = 2
-            elif label == 'virus':
+            elif label == 'Virus':
                 y_label = 3
-            elif label == 'COVID':
+            elif label == 'COVID-19':
                 y_label = 3
 
             images_list = glob.glob(npy_dir + '/*.image.npy')

@@ -77,7 +77,7 @@ def main():
     for phase in ['test']:
 
         y_pred_total = []
-        for x in range(99):
+        for x in range(445):
             y_pred_total.append([])
 
         for i in range(repeat):
@@ -139,7 +139,7 @@ def main():
 
     y_pred = []
 
-    for x in range(99):
+    for x in range(445):
         final_predict = most_common_top_1(y_pred_total[x])
         y_pred.append(final_predict)
 

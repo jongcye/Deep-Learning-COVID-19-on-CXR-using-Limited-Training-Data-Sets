@@ -1,5 +1,5 @@
 # Test name
-test_name = 'name'
+test_name = 'name_newset'
 sampling_option = 'oversampling'
 
 # Batch size
@@ -20,16 +20,16 @@ feature_extract = False
 epoch_max = 100
 
 # Folder image dir
-data_dir = './data/'
+data_dir = '/media/depecher/5TB_hard/COVID_classification/'
 
 # Save dir
 save_dir = '../checkpoint' + '/' + test_name
 
 # Test epoch: what epoch to load
-inference_epoch = 2
+inference_epoch = 100
 
 # Resume training
-continue_epoch = 0
+continue_epoch = 36
 
 # Early stopping
 patience = 50

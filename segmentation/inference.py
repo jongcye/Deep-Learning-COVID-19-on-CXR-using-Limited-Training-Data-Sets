@@ -34,6 +34,9 @@ def main():
     ##############################################################################################################################
     # Semantic segmentation (inference)
 
+    # Flag  
+    flag_eval_JI = False # calculate JI
+    flag_save_JPG = False # preprocessed, mask
 
     # GPU   
     if torch.cuda.is_available():
@@ -49,9 +52,7 @@ def main():
 
 
     # Load model
-    model_dir = header.dir_save + header.filename_model
-    if torch.cuda.device_count() > 1:
-        net = nn.DataParallel(net)
+    model_dir = header.dir_checkpoint + header.filename_model
     if os.path.isfile(model_dir):
         print('\n>> Load model - %s' % (model_dir))
         checkpoint = torch.load(model_dir)
@@ -60,7 +61,7 @@ def main():
         print("  >>> Epoch : %d" % (checkpoint['epoch']))
         # print("  >>> JI Best : %.3f" % (checkpoint['ji_best']))
     else:
-        print('[Err] Model does not exist in %s' % (header.dir_save + header.filename_model))
+        print('[Err] Model does not exist in %s' % (header.dir_checkpoint + header.filename_model))
         exit()
 
 
@@ -69,13 +70,15 @@ def main():
     
 
     # loop dataset class
-    folder_list = ['NLM_Montgomery', 'Normal', 'bacteroia', 'TB', 'virus', 'COVID19']
+    folder_list = ['Normal', 'COVID-19',  'Virus', 'bacteria', 'TB']
     for folder in folder_list:
 
         # Dataset
         print('\n>> Load dataset -', header.dir_data_root + folder)
-        testset = mydataset.MyInferenceClass(tag = folder)
-        # testset = mydataset.MyTestDataset(header.dir_test_path, test_sampler)        
+        if flag_eval_JI:
+            testset = mydataset.MyTestDataset(header.dir_test_path, test_sampler)   
+        else:
+            testset = mydataset.MyInferenceClass(tag = folder) 
         testloader = DataLoader(testset, batch_size=header.num_batch_test, shuffle=False, num_workers=num_worker, pin_memory=True)
         print("  >>> Total # of test sampler : %d" % (len(testset)))
 
@@ -105,21 +108,30 @@ def main():
 
                     # post processing
                     post_output = [post_processing(outputs_max[k][j].numpy(), original_size) for j in range(1, header.num_masks)] # exclude background
+        
+                    # jaccard index (JI)
+                    if flag_eval_JI:
+                        ji = tuple(get_JI(post_output[j], data['masks'][k][j].numpy()) for j in range(len(post_output)))
+                        ji_test.append(ji)
                     
-                    # jaccard index  
-                    # ji = tuple(get_JI(post_output[j], data['masks'][k][j].numpy()) for j in range(len(post_output)))
-                    # ji_test.append(ji)
-                    
-                    # # original image processings
+                    # original image processings
                     save_dir = header.dir_save + folder
                     mydataset.create_folder(save_dir)
-                    image_original = testset.get_original(i*header.num_batch_test   +k)
-                    np.save(save_dir + dir_case_id + '.image.npy', testset.get_original(i*header.num_batch_test   +k, True))
+                    image_original = testset.get_original(i*header.num_batch_test+k)
+                    np.save(save_dir + dir_case_id + '.image.npy', image_original)
                     np.save(save_dir + dir_case_id + '.mask.npy', post_output[1]+post_output[2])
 
-            # # ji
-            # ji_thorax= [np.mean((ll, rl)) for (heart, ll, rl) in ji_test]
-            # ji_cardiac = [heart for (heart, ll, rl) in ji_test]
+                    # save mask/pre-processed image
+                    if flag_save_JPG:
+                        save_dir = save_dir.replace('/' + folder, '_visualize/' + folder)
+                        mydataset.create_folder(save_dir)
+                        Image.fromarray(post_output[1]*255 + post_output[2]*255).convert('L').save(save_dir + dir_case_id + '_mask.jpg')
+                        Image.fromarray(image_original.astype('uint8')).convert('L').save(save_dir + dir_case_id + '_image.jpg')
+                    
+            # JI statistics
+            if flag_eval_JI:
+                ji_thorax= [np.mean((ll, rl)) for (heart, ll, rl) in ji_test]
+                ji_cardiac = [heart for (heart, ll, rl) in ji_test]
 
 
 def get_JI(pred_m, gt_m):
