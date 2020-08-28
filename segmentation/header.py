@@ -21,14 +21,14 @@ ratio_dropout = 0.2
 weight_bk = 0.5
 
 # Directory 
-dir_data_root = "../data/" #"../../data/"
+dir_data_root = "../data/"
 dir_train_path = dir_data_root + "JSRT"
 dir_test_path = dir_data_root + "JSRT"
 dir_mask_path = ["/SCR/fold1/masks/heart", "/SCR/fold2/masks/heart", 
                 "/SCR/fold1/masks/left lung", "/SCR/fold2/masks/left lung", 
                 "/SCR/fold1/masks/right lung", "/SCR/fold2/masks/right lung"]
 dir_checkpoint = "../checkpoint/"
-dir_save = "../output/" #"../../../../../F/COVID_BIMCV/" #'../../../../../F/covid-chestxray-dataset/' #"../../../../../F/chestxray14/" #
+dir_save = "../output/" 
 
 # Network
 num_masks = 4
