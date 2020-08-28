@@ -79,8 +79,6 @@ def main():
 
 
     # network to GPU    
-    if torch.cuda.device_count() > 1:
-        net = nn.DataParallel(net)
     net.to(device)
     model_state_dict = copy.deepcopy(net.state_dict())
     lr_scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[70, 80, 90], gamma=0.1) 
@@ -186,7 +184,7 @@ def main():
 
         ##############################################################################################################################
         ## save model
-        mydataset.create_folder(header.dir_save)
+        mydataset.create_folder(header.dir_checkpoint)
         if (ji_mean > ji_best):
             ji_best = ji_mean
             model_state_dict = copy.deepcopy(net.state_dict())
@@ -196,8 +194,8 @@ def main():
                         'ji' : ji,
                         'loss_history' : loss_history,
                         'test_sampler' : test_sampler,
-                        }, header.dir_save + header.filename_model)  
-            print('  >>> Saved as %s [%d epoch] - updated' % (header.dir_save + header.filename_model, epoch+1))    
+                        }, header.dir_checkpoint + header.filename_model)  
+            print('  >>> Saved as %s [%d epoch] - updated' % (header.dir_checkpoint + header.filename_model, epoch+1))    
 
 
         ##############################################################################################################################

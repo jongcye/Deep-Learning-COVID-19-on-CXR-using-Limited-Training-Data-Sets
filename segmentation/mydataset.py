@@ -18,6 +18,10 @@ import os
 import glob
 from PIL import Image
 
+# add
+import csv
+import shutil
+
 
 class MyTrainDataset(Dataset):
 
@@ -167,11 +171,7 @@ class MyInferenceClass(Dataset):
     def __init__(self, tag):
 
         image_path = header.dir_data_root + tag
-        self.images = glob.glob(image_path + '/*.png')
-        self.images.extend(glob.glob(image_path + '/*.jpeg'))
-        self.images.extend(glob.glob(image_path + '/*.jpg'))
-        self.images.extend(glob.glob(image_path + '/*.gif'))
-
+        self.images = glob.glob(image_path + '/*')
         self.images.sort()
         self.data_len = len(self.images)
         self.ids = []
@@ -189,20 +189,9 @@ class MyInferenceClass(Dataset):
 
     def __getitem__(self, index):
 
-        # load image
-        images_original = np.asarray(Image.open(self.images[index]))
-
-        # crop blank area
-        line_center = images_original[int(images_original.shape[0]/2):,int(images_original.shape[1]/2)]
-        if(line_center.min() == 0):
-            images = images_original[:int(images_original.shape[0]/2)+np.where(line_center==0)[0][0],:]
-        else:
-            images = images_original
+        # load and preprocessing
+        images = self.get_original(index).astype('float32')
         original_image_size = np.asarray(images.shape)
-
-        # preprocessing
-        images = pre_processing(images, flag_jsrt=0)
-        images = images.astype('float32')
 
         # resize
         images = np.asarray(Image.fromarray(images).resize((header.resize_width, header.resize_height)))
@@ -210,12 +199,15 @@ class MyInferenceClass(Dataset):
         return {'input':np.expand_dims(images, 0), 'ids':self.ids[index], 'im_size':original_image_size}
     
 
-    def get_original(self, index, flag=True):
+    def get_original(self, index):
 
         # load image
-        images = np.asarray(Image.open(self.images[index]))
+        images = Image.open(self.images[index])
+        if (np.asarray(images).max() <= 255):
+            images = images.convert("L")
+        images = np.asarray(images)
 
-        # crop blank area
+        # crop blank area - public only
         line_center = images[int(images.shape[0]/2):,int(images.shape[1]/2)]
         if (line_center.min() == 0):
             images = images[:int(images.shape[0]/2)+np.where(line_center==0)[0][0],:]
@@ -234,7 +226,7 @@ def pre_processing(images, flag_jsrt = 10):
 
     # histogram specification, gamma correction
     hist, bins = np.histogram(images.flatten(), num_bin, [0, num_bin])
-    cdf = hist_specification(hist, num_out_bit, images.min(), 1<<12, flag_jsrt)
+    cdf = hist_specification(hist, num_out_bit, images.min(), num_bin, flag_jsrt)
     images = cdf[images].astype('float32')
 
     return images
