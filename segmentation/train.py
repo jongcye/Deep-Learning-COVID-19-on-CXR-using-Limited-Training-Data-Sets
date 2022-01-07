@@ -74,7 +74,7 @@ def main():
     # Criterion & optimizer
     weight_label = np.ones(header.num_masks)
     weight_label[0] = header.weight_bk
-    criterion = nn.CrossEntropyLoss(weight=torch.FloatTensor(weight_label).cuda())
+    criterion = nn.CrossEntropyLoss(weight=torch.tensor(weight_label, dtype=torch.float, device=device))
     optimizer = optim.Adam(net.parameters(), lr=header.learning_rate, betas = (0.9, 0.999), eps = 1e-8, weight_decay = 1e-6)
 
 
