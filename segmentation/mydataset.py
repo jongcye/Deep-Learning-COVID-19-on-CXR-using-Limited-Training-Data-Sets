@@ -40,6 +40,8 @@ class MyTrainDataset(Dataset):
             raise RuntimeError('Dataset not found or corrupted. DIR : ' + image_path)
 
         for sample in self.sample_arr:
+            if os.path.isdir(sample):
+                continue
             self.ids.append(sample.replace(image_path, '').replace('.IMG', ''))
             self.images.append(sample)
             mask_list = []
